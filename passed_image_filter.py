@@ -3,8 +3,8 @@ import os
 import shutil
 from datetime import datetime
 
-file_path = './data.csv'
-image_folder = './8.origin_images'
+file_path = './329_passed_list.csv'
+image_folder = './origin_image'
 
 lists = []
 passed_list = []
