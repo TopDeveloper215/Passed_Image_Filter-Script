@@ -22,21 +22,26 @@ with open(file_path, newline='', encoding='utf-8') as csvfile:
         name_component = file_path.split('\\')[1]
         unique_names.add(name_component)
         list_path = file_path.split('\\')
-        if len(list_path) > 3:
-            type_input = list_path[2]
-            unique_types.add(type_input)
-        elif len(list_path) == 3 :
-            type_input = 'none'
-            unique_types.add(type_input)
 
 unique_names = sorted(list(unique_names))
-unique_types = sorted(list(unique_types))
 
 print("All names: \n")
 for i, name in enumerate(unique_names, start=1):
     print(f"{i}. {name}")
 name_index = int(input("\n Select name :")) - 1
 name_input = unique_names[name_index]
+
+for list in lists:
+    list= str(list)
+    list_path = list.split('\\')
+    if list_path[1] == name_input:
+        if len(list_path) > 3:
+            type_input = list_path[2]
+            unique_types.add(type_input)
+        elif len(list_path) == 3:
+            unique_types.add('none')
+
+unique_types = sorted(unique_types)
 
 print("All types: \n")
 for i, type in enumerate(unique_types, start=1):
@@ -45,16 +50,16 @@ type_index = int(input("\n Select type : ")) - 1
 type_input = unique_types[type_index]
 
 for list in lists:
-    list_component = list.split('\\')
+    list = str(list)
+    list_component = list.split('\\')   
+    name = list_component[1]
     if len(list_component) > 3:
-        name = list_component[1]
         type = list_component[2]
         if name == name_input and type == type_input:
             each_passed_list = list_component[-1]
             passed_list.append(each_passed_list)
-    elif len(list_component) == 3:
-        name = list_component[1]
-        if name == name_input:
+    else:
+        if name == name_input and type_input == 'none':
             each_passed_list = list_component[-1]
             passed_list.append(each_passed_list)
 all_images = os.listdir(image_folder)
@@ -79,4 +84,4 @@ for image in filtered_images:
     output_path = os.path.join(filtered_folder, image)
     shutil.move(source_path, output_path)
     print(f"Moved {image} to {filtered_folder}")
-final = input("\n Done")
+final = input("\n Done!")
