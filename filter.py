@@ -25,10 +25,9 @@ with open(file_path, newline='', encoding='utf-8') as csvfile:
 
 unique_names = sorted(list(unique_names))
 
-print("All names: \n")
 for i, name in enumerate(unique_names, start=1):
-    print(f"{i}. {name}")
-name_index = int(input("\n Select name :")) - 1
+    print(f"\n{i}. {name}")
+name_index = int(input("\nSelect name :")) - 1
 name_input = unique_names[name_index]
 
 for list in lists:
@@ -43,11 +42,11 @@ for list in lists:
 
 unique_types = sorted(unique_types)
 
-print("All types: \n")
 for i, type in enumerate(unique_types, start=1):
-    print(f"{i}. {type}")
-type_index = int(input("\n Select type : ")) - 1
+    print(f"\n{i}. {type}")
+type_index = int(input("\nSelect type : ")) - 1
 type_input = unique_types[type_index]
+print()
 
 for list in lists:
     list = str(list)
@@ -65,23 +64,26 @@ for list in lists:
 all_images = os.listdir(image_folder)
 filtered_images = [image for image in all_images if image in passed_list]
 
-if filtered_images == []:
-    print('Passed images not found')
-
-current_date = datetime.now()
-month_day = f"{current_date.month}.{current_date.day}"
-
-if name_input and type_input != 'none':
-    output_folder_name = f"{month_day}_Passed image_{name_input}({type_input})"
+if not filtered_images:
+    print('WARNING : Passed images not found!')
 else:
-    output_folder_name = f"{month_day}_Passed image_{name_input}"
+    current_date = datetime.now()
+    month_day = f"{current_date.month}.{current_date.day} ({current_date.strftime('%p')})"
 
-filtered_folder = os.path.join('./', output_folder_name)
-os.makedirs(filtered_folder, exist_ok=True)
+    if name_input and type_input != 'none':
+        output_folder_name = f"{month_day}_passed image_{name_input}({type_input})"
+    else:
+        output_folder_name = f"{month_day}_passed image_{name_input}"
 
-for image in filtered_images:
-    source_path = os.path.join(image_folder, image)
-    output_path = os.path.join(filtered_folder, image)
-    shutil.move(source_path, output_path)
-    print(f"Moved {image} to {filtered_folder}")
-final = input("\n Done!")
+    filtered_folder = os.path.join('./', output_folder_name)
+    os.makedirs(filtered_folder, exist_ok=True)
+
+    for image in filtered_images:
+        source_path = os.path.join(image_folder, image)
+        output_path = os.path.join(filtered_folder, image)
+        shutil.move(source_path, output_path)
+        print(f"Moved {image} to {filtered_folder}")
+
+terminal_width = shutil.get_terminal_size().columns
+done_message = "--------------Done---------------"
+input("\n" + done_message.center(terminal_width))
