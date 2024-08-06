@@ -83,7 +83,7 @@ else:
         output_path = os.path.join(filtered_folder, image)
         shutil.move(source_path, output_path)
         print(f"Moved {image} to {filtered_folder}")
-
+    print(f"\nTotal Passed Image : {len(filtered_images)}")
 terminal_width = shutil.get_terminal_size().columns
 done_message = "--------------Done---------------"
 input("\n" + done_message.center(terminal_width))
